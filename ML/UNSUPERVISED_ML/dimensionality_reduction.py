@@ -1,6 +1,7 @@
 import numpy as np
 # Generate high-dimensional dataset
 X_dimred = np.random.randn(200, 10)  # 200 samples, 10 features   #AMAN KUMAR
+print(X_dimred)
 
 # 4.1 Principal Component Analysis (PCA)
 from sklearn.decomposition import PCA
