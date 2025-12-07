@@ -1,8 +1,26 @@
 # Complete Machine Learning Guide for Beginners
 
+## Visualization Companion Script
+
+To explore the outputs of every ML practical interactively, run `python ML\visualize_ml_topics.py` from this repository. Close each figure window to advance to the next plot.
+
+- `python ML\visualize_ml_topics.py --list` shows each section and subtopic.
+- `python ML\visualize_ml_topics.py --section data_preprocessing` runs the visualizations for that section only; available sections are `data_preprocessing`, `linear_regression`, `supervised_learning`, and `unsupervised_learning`.
+- `python ML\visualize_ml_topics.py --topic preprocessing_standardization_manual` renders an individual chart; use `--list` to look up valid topic keys.
+
+The script mirrors the structure of the `ML` folder and includes dedicated graphs for normalization, standardization, linear regression (manual and sklearn variants), supervised learning metrics and projections, as well as clustering and dimensionality reduction techniques.
+
+### Visualization Coverage
+
+- **Data preprocessing**: side-by-side MinMaxScaler bars, manual vs sklearn normalization comparisons, StandardScaler z-score traces, and manual z-score error bars to highlight scale differences.
+- **Linear regression**: scatter plots with regression lines for sklearn and manual fits, annotated predictions for new points, and residual stem plots to illustrate model error.
+- **Supervised learning**: accuracy bar charts, confusion-matrix grids for each classifier, PCA scatter projections of the breast-cancer dataset, R² vs actual/predicted overlays, and sequential prediction traces across regression models.
+- **Unsupervised learning**: k-means, agglomerative, and DBSCAN cluster scatter plots on synthetic blobs plus PCA and t-SNE embeddings for high-dimensional samples.
+
 ## Unit 1: Introduction to Machine Learning
 
 ### What is Machine Learning?
+
 Machine Learning is a branch of artificial intelligence where computers learn from data without being explicitly programmed. Instead of writing specific rules, we feed data to algorithms that learn patterns and make predictions.
 
 **Real-life analogy**: Think of teaching a child to recognize animals. Instead of explaining "a cat has pointy ears, whiskers, and says meow," you show them many pictures of cats. Eventually, they learn to identify cats on their own.
@@ -10,28 +28,37 @@ Machine Learning is a branch of artificial intelligence where computers learn fr
 ### Key Elements of Machine Learning
 
 #### 1. **Data**
+
 The fuel for ML. Without data, there's no learning.
+
 - **Example**: Customer purchase history, weather records, medical images
 
 #### 2. **Features**
+
 Characteristics or attributes of your data.
+
 - **Example**: For house price prediction - number of bedrooms, location, square footage
 
 #### 3. **Model**
+
 The algorithm that learns patterns from data.
 
 #### 4. **Training**
+
 The process of feeding data to the model so it can learn.
 
 #### 5. **Prediction**
+
 Using the trained model on new, unseen data.
 
 ### Types of Machine Learning
 
 #### 1. **Supervised Learning**
+
 Learning with labeled data (you know the correct answers).
 
 **Real-life Example**: Email spam detection
+
 - You have emails labeled as "spam" or "not spam"
 - The model learns patterns from these labeled emails
 - It can then classify new emails
@@ -73,9 +100,11 @@ print(f"Email classification: {prediction[0]}")
 ```
 
 #### 2. **Unsupervised Learning**
+
 Learning from unlabeled data (finding hidden patterns).
 
 **Real-life Example**: Customer segmentation
+
 - A store wants to group customers by buying behavior
 - No predefined categories exist
 - The algorithm discovers natural groupings
@@ -104,15 +133,18 @@ print(f"Cluster centers: {kmeans.cluster_centers_}")
 ```
 
 #### 3. **Reinforcement Learning** (Introduction)
+
 Learning through trial and error with rewards and penalties.
 
 **Real-life Example**: Teaching a robot to walk
+
 - Robot tries different movements
 - Gets rewards for successful steps
 - Gets penalties for falling
 - Learns optimal walking strategy over time
 
 **Other Examples**:
+
 - Game AI (Chess, Go)
 - Self-driving cars
 - Recommendation systems that improve over time
@@ -128,6 +160,7 @@ Data preprocessing is like preparing ingredients before cooking. Raw data is oft
 **What is it?** Making all features have similar ranges so one feature doesn't dominate others.
 
 **Real-life Example**: Imagine predicting house prices using:
+
 - Square footage: 500-5000
 - Number of bedrooms: 1-5
 
@@ -177,6 +210,7 @@ print(houses_standardized)
 **Why?** Not all features are useful. Some might be redundant or irrelevant.
 
 **Real-life Example**: Predicting student exam scores
+
 - Useful features: study hours, attendance, previous grades
 - Useless features: shoe size, favorite color
 
@@ -213,6 +247,7 @@ Feature selection happens during model training.
 **What is it?** Reducing the number of features while keeping most information.
 
 **Real-life Example**: Imagine describing a person
+
 - Instead of 100 characteristics (height, weight, age, hair color, eye color...)
 - You use 3 main "components" that capture most information (physical build, age group, appearance)
 
@@ -251,6 +286,7 @@ plt.show()
 **What is Regression?** Predicting continuous numerical values.
 
 **Real-life Examples**:
+
 - Predicting house prices
 - Forecasting stock prices
 - Estimating temperature
@@ -261,6 +297,7 @@ plt.show()
 **Concept**: Finding a straight line that best fits the data.
 
 **Formula**: y = mx + b
+
 - y = predicted value
 - m = slope (weight)
 - x = input feature
@@ -359,6 +396,7 @@ print(f"R² Score: {r2:.4f}")
 **Real-life Analogy**: Imagine you're hiking down a mountain in thick fog. You can only see your immediate surroundings. You take small steps in the direction that goes down the most steeply. Eventually, you reach the bottom (minimum error).
 
 **How it works**:
+
 1. Start with random weights
 2. Calculate error
 3. Adjust weights to reduce error
@@ -370,33 +408,33 @@ def gradient_descent_demo():
     # Simple dataset
     X = np.array([1, 2, 3, 4, 5])
     y = np.array([2, 4, 6, 8, 10])  # y = 2*x (perfect linear relationship)
-    
+
     # Initialize parameters
     m = 0  # slope
     b = 0  # intercept
     learning_rate = 0.01
     iterations = 1000
     n = len(X)
-    
+
     # Gradient Descent
     for i in range(iterations):
         # Predictions
         y_pred = m * X + b
-        
+
         # Calculate gradients
         dm = (-2/n) * sum(X * (y - y_pred))
         db = (-2/n) * sum(y - y_pred)
-        
+
         # Update parameters
         m = m - learning_rate * dm
         b = b - learning_rate * db
-        
+
         if i % 100 == 0:
             mse = sum((y - y_pred)**2) / n
             print(f"Iteration {i}: m={m:.4f}, b={b:.4f}, MSE={mse:.4f}")
-    
+
     print(f"\nFinal equation: y = {m:.4f}x + {b:.4f}")
-    
+
 gradient_descent_demo()
 ```
 
@@ -476,6 +514,7 @@ print(f"R² Score: {r2}")
 **What is Classification?** Predicting discrete categories or classes.
 
 **Real-life Examples**:
+
 - Email: Spam or Not Spam
 - Medical: Disease or Healthy
 - Bank: Approve or Reject Loan
@@ -502,7 +541,7 @@ tree_model.fit(X, y)
 
 # Visualize the tree
 plt.figure(figsize=(20, 10))
-plot_tree(tree_model, feature_names=iris.feature_names, 
+plot_tree(tree_model, feature_names=iris.feature_names,
           class_names=iris.target_names, filled=True, fontsize=10)
 plt.title('Decision Tree for Iris Classification')
 plt.show()
@@ -597,7 +636,7 @@ print(f"Predicted gender: {'Male' if prediction[0] == 1 else 'Female'}")
 # Visualize
 plt.scatter(X[y==0][:, 0], X[y==0][:, 1], color='red', label='Female', s=100)
 plt.scatter(X[y==1][:, 0], X[y==1][:, 1], color='blue', label='Male', s=100)
-plt.scatter(new_person[:, 0], new_person[:, 1], color='green', 
+plt.scatter(new_person[:, 0], new_person[:, 1], color='green',
            marker='*', s=300, label='New Person')
 plt.xlabel('Height (cm)')
 plt.ylabel('Weight (kg)')
@@ -670,7 +709,7 @@ plt.show()
 from sklearn.svm import SVC
 
 # Load dataset
-X, y = make_classification(n_samples=100, n_features=2, n_redundant=0, 
+X, y = make_classification(n_samples=100, n_features=2, n_redundant=0,
                           n_informative=2, random_state=42, n_clusters_per_class=1)
 
 # Train SVM
@@ -728,6 +767,7 @@ print(classification_report(y_true, y_pred))
 ```
 
 **Real-life interpretation**:
+
 - **Accuracy**: How often is the classifier correct overall?
 - **Precision**: When it predicts positive, how often is it right? (Important when false positives are costly - e.g., spam filter)
 - **Recall**: Of all actual positives, how many did we catch? (Important when false negatives are costly - e.g., disease detection)
@@ -740,6 +780,7 @@ print(classification_report(y_true, y_pred))
 **What is Clustering?** Grouping similar items together without predefined labels.
 
 **Real-life Examples**:
+
 - Customer segmentation
 - Document organization
 - Image compression
@@ -804,12 +845,12 @@ plt.figure(figsize=(10, 6))
 colors = ['red', 'blue', 'green']
 for i in range(3):
     cluster_points = customers[clusters == i]
-    plt.scatter(cluster_points[:, 0], cluster_points[:, 1], 
+    plt.scatter(cluster_points[:, 0], cluster_points[:, 1],
                c=colors[i], label=f'Cluster {i+1}', s=100, alpha=0.6)
 
 # Plot centroids
 centroids = kmeans.cluster_centers_
-plt.scatter(centroids[:, 0], centroids[:, 1], 
+plt.scatter(centroids[:, 0], centroids[:, 1],
            c='black', marker='X', s=300, label='Centroids')
 
 plt.xlabel('Annual Income (k$)')
@@ -856,6 +897,7 @@ plt.show()
 **Concept**: Creates a tree-like structure (dendrogram) showing how clusters merge.
 
 **Two Approaches**:
+
 1. **Agglomerative (Bottom-up)**: Start with each point as a cluster, merge similar ones
 2. **Divisive (Top-down)**: Start with one cluster, split recursively
 
@@ -967,14 +1009,14 @@ results = {}
 for name, model in models.items():
     # Train
     model.fit(X_train_scaled, y_train)
-    
+
     # Predict
     y_pred = model.predict(X_test_scaled)
-    
+
     # Evaluate
     accuracy = accuracy_score(y_test, y_pred)
     cv_scores = cross_val_score(model, X_train_scaled, y_train, cv=5)
-    
+
     results[name] = {
         'model': model,
         'accuracy': accuracy,
@@ -982,7 +1024,7 @@ for name, model in models.items():
         'cv_std': cv_scores.std(),
         'predictions': y_pred
     }
-    
+
     print(f"\n{'='*50}")
     print(f"{name}")
     print(f"{'='*50}")
@@ -1067,6 +1109,7 @@ for i, row in new_customers.iterrows():
 ## Key Takeaways for Beginners
 
 ### 1. **Machine Learning Workflow**
+
 1. Understand the problem
 2. Collect and prepare data
 3. Choose appropriate algorithm
@@ -1076,17 +1119,18 @@ for i, row in new_customers.iterrows():
 
 ### 2. **When to Use What**
 
-| Problem Type | Algorithm to Try First |
-|--------------|----------------------|
-| Continuous prediction | Linear Regression |
-| Binary classification | Logistic Regression |
+| Problem Type               | Algorithm to Try First        |
+| -------------------------- | ----------------------------- |
+| Continuous prediction      | Linear Regression             |
+| Binary classification      | Logistic Regression           |
 | Multi-class classification | Decision Trees, Random Forest |
-| Clustering | K-Means |
-| High-dimensional data | PCA first |
-| Text classification | Naive Bayes |
-| Complex patterns | Neural Networks |
+| Clustering                 | K-Means                       |
+| High-dimensional data      | PCA first                     |
+| Text classification        | Naive Bayes                   |
+| Complex patterns           | Neural Networks               |
 
 ### 3. **Common Pitfalls to Avoid**
+
 - Not scaling features
 - Overfitting (model too complex)
 - Underfitting (model too simple)
@@ -1095,6 +1139,7 @@ for i, row in new_customers.iterrows():
 - Not validating results
 
 ### 4. **Best Practices**
+
 - Always split data into train/test sets
 - Use cross-validation
 - Try multiple models
@@ -1103,6 +1148,7 @@ for i, row in new_customers.iterrows():
 - Document your work
 
 ### 5. **Resources for Learning**
+
 - Practice on Kaggle datasets
 - Use scikit-learn documentation
 - Join ML communities
@@ -1114,6 +1160,7 @@ for i, row in new_customers.iterrows():
 ## Quick Reference Code Templates
 
 ### Loading Data
+
 ```python
 import pandas as pd
 df = pd.read_csv('data.csv')
@@ -1122,12 +1169,14 @@ y = df['target']
 ```
 
 ### Train-Test Split
+
 ```python
 from sklearn.model_selection import train_test_split
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 ```
 
 ### Scaling
+
 ```python
 from sklearn.preprocessing import StandardScaler
 scaler = StandardScaler()
@@ -1136,6 +1185,7 @@ X_test_scaled = scaler.transform(X_test)
 ```
 
 ### Training and Prediction
+
 ```python
 from sklearn.linear_model import LogisticRegression
 model = LogisticRegression()
@@ -1144,6 +1194,7 @@ predictions = model.predict(X_test)
 ```
 
 ### Evaluation
+
 ```python
 from sklearn.metrics import accuracy_score, classification_report
 accuracy = accuracy_score(y_test, predictions)
