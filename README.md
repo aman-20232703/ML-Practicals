@@ -1200,5 +1200,3 @@ from sklearn.metrics import accuracy_score, classification_report
 accuracy = accuracy_score(y_test, predictions)
 print(classification_report(y_test, predictions))
 ```
-
-Good luck with your Machine Learning journey! 🚀
